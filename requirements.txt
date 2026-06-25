@@ -7,3 +7,6 @@ markdown2
 fpdf2
 python-dotenv
 pydantic
+pytest
+pytest-cov
+pytest-mock
