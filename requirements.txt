@@ -1,0 +1,9 @@
+crewai
+crewai-tools
+litellm
+langchain-google-vertexai
+firecrawl-py
+markdown2
+pdfkit
+python-dotenv
+pydantic

@@ -1,0 +1,25 @@
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Output and temporary files
+output/
+test.pdf
+autopilot/
+*.json:Zone.Identifier
+keen-defender.json
+docs/AI Job Application Swarm.md
+
+# OS generated files
+.DS_Store
+Thumbs.db
