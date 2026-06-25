@@ -10,7 +10,7 @@
 
 ## 2. AI Agents (`agents.py`)
 Defines the personas, goals, and backstories for the Swarm.
-- **`scraper_agent`:** Equipped with the `FirecrawlScraperTool` to extract clean job postings.
+- **`scraper_agent`:** Equipped with the `JinaReaderScraperTool` to extract clean job postings.
 - **`evaluator_agent`:** Analyzes fit (Base Resume vs Job Description).
 - **`resume_tailor_agent`:** Rewrites the base markdown resume to highlight keyword matches.
 - **`cover_letter_agent`:** Drafts the email body/cover letter.
@@ -21,6 +21,6 @@ Defines the personas, goals, and backstories for the Swarm.
 - **Responsibilities:** Defines the exact expected output format (e.g., instructing the Evaluator to end its output strictly with "Decision: GO").
 
 ## 4. Custom Tools (`tools/`)
-- **`FirecrawlScraperTool`:** A custom CrewAI `BaseTool` that calls the Firecrawl API.
+- **`JinaReaderScraperTool`:** A custom CrewAI `BaseTool` that calls the Jina Reader API.
 - **`MarkdownToPDFTool`:** Uses `pdfkit` and `wkhtmltopdf` to render the agent's markdown string into a styled PDF file.
 - **`SMTPEmailTool`:** Constructs a MIME multipart email (text body + PDF attachment) and dispatches it via SMTP.

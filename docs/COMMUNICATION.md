@@ -4,7 +4,7 @@ This document outlines how data flows between the user, the AI agents, and exter
 
 ## 1. External API Communication
 - **LLM Provider:** Google Vertex AI (Gemini 2.5 Flash). Agents communicate securely via the CrewAI LLM wrapper using the `GEMINI_API_KEY`.
-- **Web Scraping:** Firecrawl API. The `Scraper Agent` makes HTTP requests to Firecrawl to bypass anti-bot protections and extract clean markdown from job portals.
+- **Web Scraping:** Jina Reader API. The `Scraper Agent` makes HTTP requests to `r.jina.ai` to bypass anti-bot protections and extract clean markdown from job portals, ensuring complex DOM structures are navigated effectively.
 - **Email Delivery:** SMTP (Simple Mail Transfer Protocol). The `Application Dispatcher` uses Python's native `smtplib` and `ssl` to communicate securely over port 465 to Gmail/Outlook servers using an App Password.
 
 ## 2. Inter-Agent Communication (Context Passing)

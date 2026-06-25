@@ -1,9 +1,12 @@
 # Product Roadmap: Multi-Agent Job Apply
 
 ## Completed Phases
-- [x] **Phase 1: Core Agent Orchestration**
-  - Configured CrewAI with Gemini 2.5 Flash.
-  - Created sequential agent workflows (Scraper -> Evaluator -> Tailor -> Writer).
+- [x] **Phase 1: Minimum Viable Product (Complete)**
+  - Basic CLI interface.
+  - Integration with Gemini 2.5 Flash via CrewAI.
+  - Integrated Jina Reader API for intelligent web scraping and bypassing complex DOMs.
+  - PDF generation and SMTP email dispatch capabilities.
+  - Built `SMTPEmailTool` for automated dispatch.
 - [x] **Phase 2: Custom Tooling Integration**
   - Integrated Firecrawl API for intelligent web scraping.
   - Built `MarkdownToPDFTool` using `pdfkit`.

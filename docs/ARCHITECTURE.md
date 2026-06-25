@@ -12,7 +12,7 @@ graph TD;
     
     subgraph Phase 1: Evaluation Crew
         Main --> Scraper[Scraper Agent]
-        Scraper -.->|Firecrawl API| Website[Job Board URL]
+        Scraper -.->|Jina Reader API| Website[Job Board URL]
         Scraper --> Evaluator[Evaluator Agent]
         Evaluator -.->|Compare| BaseResume[(base_resume.md)]
     end
@@ -46,7 +46,7 @@ By default, the application operates in a "Dry Run" mode before actually dispatc
 - The user can review the `tailored_resume.pdf` and `email_dry_run.txt` before confirming dispatch.
 
 ### 3.3. Tool Abstraction
-Custom Python tools (`FirecrawlScraperTool`, `MarkdownToPDFTool`, `SMTPEmailTool`) wrap complex logic so the CrewAI agents only need to know *what* to do, not *how* to do it.
+Custom Python tools (`JinaReaderScraperTool`, `MarkdownToPDFTool`, `SMTPEmailTool`) wrap complex logic so the CrewAI agents only need to know *what* to do, not *how* to do it.
 
 ## 4. Scalability & Deployment
 Currently designed as a local CLI tool. Future architectures may involve migrating this into a fastAPI backend with a React UI for managing hundreds of concurrent applications.

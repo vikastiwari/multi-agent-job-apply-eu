@@ -1,11 +1,3 @@
-# Bug Tracking: Multi-Agent Job Apply
+# Known Bugs and Issues
 
-This document tracks known issues, their root causes, and how they were resolved.
-
-## Known Issues
-
-*(Empty - No known bugs currently)*
-
-## Resolved Bugs
-
-*(Empty - No resolved bugs currently)*
+1. **PDF Generation Dependency Error (Resolved):** `requirements.txt` incorrectly listed `pdfkit` instead of `fpdf2`, causing an `ImportError` on `main.py` initialization. Fixed in Phase 2 commit.
