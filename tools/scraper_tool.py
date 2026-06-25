@@ -1,19 +1,28 @@
 from crewai.tools import BaseTool
-from firecrawl import FirecrawlApp
+import urllib.request
+import urllib.error
 import os
 
-class FirecrawlScraperTool(BaseTool):
-    name: str = "Firecrawl Scraper Tool"
-    description: str = "A tool to extract markdown content from a given job URL using Firecrawl API."
+class JinaReaderScraperTool(BaseTool):
+    name: str = "Jina Reader Scraper Tool"
+    description: str = "A tool to bypass complex DOM structures and extract clean markdown content from a given job URL using the Jina Reader API."
     
     def _run(self, url: str) -> str:
-        api_key = os.environ.get("FIRECRAWL_API_KEY")
-        if not api_key or api_key == "your_firecrawl_api_key_here":
-            return "Error: Valid FIRECRAWL_API_KEY is not set in environment."
+        # Jina Reader API URL
+        jina_url = f"https://r.jina.ai/{url}"
+        
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0",
+            "Accept": "text/event-stream" # Prefer markdown stream
+        }
+        
+        req = urllib.request.Request(jina_url, headers=headers)
         
         try:
-            app = FirecrawlApp(api_key=api_key)
-            scrape_result = app.scrape(url, formats=['markdown'])
-            return scrape_result.markdown if scrape_result.markdown else 'No markdown content extracted.'
+            with urllib.request.urlopen(req, timeout=30) as response:
+                content = response.read().decode('utf-8')
+                return content if content else 'No markdown content extracted.'
+        except urllib.error.URLError as e:
+            return f"Failed to scrape URL {url} using Jina Reader. Error: {str(e)}"
         except Exception as e:
-            return f"Failed to scrape URL {url}. Error: {str(e)}"
+            return f"Unexpected error while scraping {url}: {str(e)}"

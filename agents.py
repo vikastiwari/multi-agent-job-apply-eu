@@ -1,7 +1,7 @@
 import os
 from crewai import Agent, LLM
 
-from tools.scraper_tool import FirecrawlScraperTool
+from tools.scraper_tool import JinaReaderScraperTool
 from tools.pdf_tool import MarkdownToPDFTool
 from tools.email_tool import SMTPEmailTool
 
@@ -22,7 +22,7 @@ class JobApplicationAgents():
             role='Senior Data Extractor',
             goal='Extract the full job description, requirements, and application contact details from a given URL.',
             backstory='An expert web scraper who specializes in finding job postings and extracting clean markdown content from complex websites.',
-            tools=[FirecrawlScraperTool()],
+            tools=[JinaReaderScraperTool()],
             llm=self.llm,
             verbose=True,
             allow_delegation=False

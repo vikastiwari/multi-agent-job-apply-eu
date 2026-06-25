@@ -4,6 +4,6 @@ litellm
 langchain-google-vertexai
 firecrawl-py
 markdown2
-pdfkit
+fpdf2
 python-dotenv
 pydantic
