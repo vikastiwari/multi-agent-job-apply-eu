@@ -4,22 +4,28 @@ A powerful, automated Multi-Agent Job Application workflow powered by **CrewAI**
 
 ## 🚀 Features
 
-- **Automated Web Scraping:** Uses Firecrawl to pull down and analyze full job descriptions from URLs.
+- **Automated Web Scraping:** Uses Jina Reader API to cleanly extract markdown from job URLs, bypassing complex DOM structures.
 - **Smart Fit Evaluation:** Evaluates the scraped job description against your base resume to determine a GO/NO-GO decision.
-- **Resume Tailoring:** If it's a good fit, the AI tailors a markdown resume and automatically converts it to a professional PDF.
+- **Resume Tailoring:** If it's a good fit, the AI tailors a single-column markdown resume (EU compliant) and automatically converts it to a professional PDF using `fpdf2`.
 - **Cover Letter Generation:** Drafts a highly personalized cover letter based on the job requirements and your background.
 - **Human-in-the-Loop (HITL) Safety:** Generates the materials and saves them in a local "Dry Run" output folder organized by company name for your review before taking action.
 - **Automated Email Dispatch:** Approving the Dry Run prompts the system to automatically email your tailored resume and cover letter directly to the recruiter.
+
+## 🧰 Tech Stack & Tools
+
+- **Language:** Python 3.9+
+- **Agent Orchestration:** CrewAI
+- **LLM Provider:** Google Vertex AI (Gemini 2.5 Flash) via LiteLLM
+- **Extraction:** Jina Reader API
+- **PDF Generation:** `fpdf2`
+- **Testing:** `pytest` (100% Core Code Coverage)
 
 ## 🛠️ Prerequisites
 
 Before you start, ensure you have the following installed:
 1. **Python 3.9+**
-2. **wkhtmltopdf:** Required by `pdfkit` to convert markdown to PDF. You must install it on your local system (or WSL) and ensure it's available in your system's PATH.
-   - *Ubuntu/WSL:* `sudo apt-get install wkhtmltopdf`
-   - *Windows:* Download from the official website and add it to your Environment Variables.
-3. API Keys for **Gemini** (Vertex AI) and **Firecrawl**.
-4. An App Password for your SMTP email provider (e.g., Gmail).
+2. API Key for **Gemini** (Google AI Studio / Vertex AI).
+3. An App Password for your SMTP email provider (e.g., Gmail) to dispatch applications.
 
 ## 💻 Installation
 
@@ -47,9 +53,6 @@ Before you start, ensure you have the following installed:
    ```env
    # Google AI Studio / Vertex AI settings
    GEMINI_API_KEY="your_gemini_api_key_here"
-
-   # Firecrawl API Key
-   FIRECRAWL_API_KEY="your_firecrawl_api_key_here"
 
    # SMTP Email Settings (for sending applications)
    SMTP_SERVER="smtp.gmail.com"
