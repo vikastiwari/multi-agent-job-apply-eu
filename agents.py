@@ -5,6 +5,7 @@ from tools.scraper_tool import JinaReaderScraperTool
 from tools.pdf_tool import MarkdownToPDFTool
 from tools.email_tool import SMTPEmailTool
 from tools.lance_rag_tool import CompanyContextRAGTool
+from tools.search_tool import JobSearchTool
 
 def get_llm():
     # Initialize Google AI Studio LLM.
@@ -17,6 +18,17 @@ def get_llm():
 class JobApplicationAgents():
     def __init__(self):
         self.llm = get_llm()
+
+    def hunter_agent(self):
+        return Agent(
+            role='Proactive Talent Sourcer',
+            goal='Scour European job boards and LinkedIn to find active job postings that match the candidate\'s profile. Return a JSON list of URLs.',
+            backstory='You are a relentless headhunter who uses advanced search queries to uncover hidden job opportunities across Europe.',
+            tools=[JobSearchTool()],
+            llm=self.llm,
+            verbose=True,
+            allow_delegation=False
+        )
 
     def scraper_agent(self):
         return Agent(

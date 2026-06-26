@@ -1,6 +1,13 @@
 from crewai import Task
 
 class JobApplicationTasks():
+    def source_jobs_task(self, agent, query):
+        return Task(
+            description=f'Use the Job Search Tool to find recent job postings matching the query: "{query}". Extract and return a JSON list of the URLs you found. Do not include any extra conversational text, just valid JSON.',
+            expected_output='A JSON list of job URLs.',
+            agent=agent
+        )
+
     def scrape_job_task(self, agent, job_url):
         return Task(
             description=f'Scrape the job posting at {job_url}. Extract the title, full job description, requirements, and if possible, the application email address or contact info.',

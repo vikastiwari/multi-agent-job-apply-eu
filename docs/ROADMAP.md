@@ -17,9 +17,10 @@
   - Cover Letter agent autonomously synthesizes core values into applications.
 
 ## Upcoming Phases (Current Focus: Europe Job Hunt)
-- [ ] **Phase 4: Sourcing & Queueing Infrastructure (Hunter Agent)**
-  - Implement a continuously running Hunter Agent that polls the EURES network and LinkedIn via Apify/Camoufox.
-  - Implement a message-broker (Redis/RabbitMQ) so the Hunter can asynchronously feed the Evaluation Crew.
+- [x] **Phase 4: Sourcing & Queueing Infrastructure (Hunter Agent) (Complete)**
+  - Implement a continuously running Hunter Agent that polls job boards (e.g. LinkedIn) via DDGS.
+  - Implement a message-broker (SQLite-based QueueManager) so the Hunter asynchronously feeds the Evaluation Crew.
+  - Split processing into `hunter.py`, `worker.py`, and `reviewer.py`.
 - [ ] **Phase 5: Voice AI Interview Prep Module**
   - Create a sub-800ms latency voice pipeline using WebRTC (LiveKit).
   - Use the scraped Job Description and Tailored Resume to conduct live, spoken mock interviews for European HR screenings.

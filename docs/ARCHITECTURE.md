@@ -41,19 +41,24 @@ graph TD;
 
 ## 3. Core Architectural Decisions
 
-### 3.1. Phased Crew Execution
-**Problem:** Allowing an AI to scrape a job, rewrite a resume, and email it in one continuous loop is dangerous. It might apply for jobs you are utterly unqualified for.
-**Solution:** We split the execution into two separate `Crew` instances:
-- **Evaluation Crew:** Reads the job and outputs a strict `Decision: GO` or `Decision: NO-GO`.
-- **Execution Crew:** Only runs if Phase 1 returns a `GO`.
+## High-Level Architecture (Phase 4)
 
-### 3.2. Human-in-the-Loop (HITL) Dry Runs
-By default, the application operates in a "Dry Run" mode before actually dispatching an email. 
-- Files are generated in an `output/<Company_Name>` folder.
-- The user can review the `tailored_resume.pdf` and `email_dry_run.txt` before confirming dispatch.
+The system consists of three independent async components communicating via a SQLite-backed Message Broker (`queue_manager.py`):
 
-### 3.3. Tool Abstraction
-Custom Python tools (`JinaReaderScraperTool`, `MarkdownToPDFTool`, `SMTPEmailTool`, `CompanyContextRAGTool`) wrap complex logic so the CrewAI agents only need to know *what* to do, not *how* to do it. The RAG tool specifically utilizes ephemeral, in-memory **LanceDB** to perform high-speed semantic searches on scraped company data to inject deep organizational alignment into cover letters.
+1.  **Hunter Daemon (`hunter.py`)**: Runs continuously, querying job boards (e.g., via `duckduckgo-search`), and extracting job URLs. It pushes these into the `evaluation_queue`.
+2.  **Worker Daemon (`worker.py`)**: Continuously polls the `evaluation_queue`. When a job URL is found, it runs the `eval_crew`. If the evaluation is "Decision: GO", it runs the `exec_crew` in DRY-RUN mode. Successful dry-runs are pushed to the `review_queue`.
+3.  **Reviewer CLI (`reviewer.py`)**: A Human-In-The-Loop terminal dashboard. Pops jobs from the `review_queue`, presents the drafted email/PDF to the user, and physically dispatches the `SMTPEmailTool` if approved.
+
+### Sub-System: The CrewAI Engine
+
+Within the Worker and Hunter daemons, we orchestrate the following Agents:
+
+-   **Hunter Agent** (Sourcing phase)
+-   **Scraper Agent** (Evaluation phase)
+-   **Evaluator Agent** (Evaluation phase)
+-   **Tailor Agent** (Execution phase)
+-   **Writer Agent** (Execution phase)
+-   **Executor Agent** (Execution phase), `CompanyContextRAGTool`) wrap complex logic so the CrewAI agents only need to know *what* to do, not *how* to do it. The RAG tool specifically utilizes ephemeral, in-memory **LanceDB** to perform high-speed semantic searches on scraped company data to inject deep organizational alignment into cover letters.
 
 ## 4. Scalability & Deployment
 Currently designed as a local CLI tool. Future architectures may involve migrating this into a fastAPI backend with a React UI for managing hundreds of concurrent applications.
