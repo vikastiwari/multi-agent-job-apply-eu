@@ -75,5 +75,5 @@ def main():
         print("\n[System] Application rejected.")
         qm.mark_review_done(job_id, status='rejected')
 
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: no cover
     main()

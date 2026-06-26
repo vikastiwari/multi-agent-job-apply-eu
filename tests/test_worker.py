@@ -75,6 +75,13 @@ def test_worker_main_no_resume(mock_qm, mock_exists):
     
     mock_qm.return_value.pop_evaluation.assert_not_called()
 
+def test_extract_company_name_from_url_unknown():
+    import worker
+    # Test fallback
+    assert worker.extract_company_name_from_url("http://localhost") == "UnknownCompany"
+    # Test exception fallback
+    assert worker.extract_company_name_from_url(None) == "UnknownCompany"
+
 @patch('worker.os.path.exists')
 @patch('worker.QueueManager')
 @patch('worker.open')

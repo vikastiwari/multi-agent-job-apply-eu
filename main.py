@@ -118,5 +118,5 @@ def main():
     else:
         print("\n[System] Application aborted by user.")
 
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: no cover
     main()

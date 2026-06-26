@@ -61,7 +61,7 @@ def main():
     except Exception as e:
         print(f"[Error] Hunter failed: {e}")
 
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: no cover
     while True:
         main()
         # Sleep for a bit before searching again to avoid rate limits
