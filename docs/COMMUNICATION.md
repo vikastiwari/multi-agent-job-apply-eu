@@ -28,3 +28,11 @@ Inside the `worker.py` daemon, CrewAI tasks run sequentially. The output of one 
 ## 4. Human-Machine Interaction
 - **Input:** The `hunter.py` daemon prompts for search queries. The `reviewer.py` dashboard prompts for `yes`, `no`, or `skip` decisions on pending applications.
 - **Output:** File system I/O. Agents write their final deliverables to `output/<company_name>/`. The Reviewer reads these to present them to the user.
+
+## 5. WebRTC Real-Time Voice (Phase 5)
+For the **Mock Interview Module**, communication bypasses standard text-based LLM loops.
+1. The user connects to a **LiveKit Cloud** room via the browser frontend.
+2. `interview.py` connects to the same room as a worker node.
+3. Audio is streamed bidirectionally via WebRTC.
+4. `silero` handles Voice Activity Detection (VAD).
+5. Audio is pushed to `google.STT()`, text to Gemini LLM (`google.LLM()`), and text output back to `google.TTS()` to generate the recruiter's voice.
