@@ -23,15 +23,8 @@ def test_hunter_main_loop(mock_sleep, mock_qm, mock_tasks, mock_agents, mock_cre
     
     import hunter
     
-    # We will raise an exception on the second sleep to break the while True loop
-    mock_sleep.side_effect = [None, Exception("Break Loop")]
-    
-    try:
-        hunter.main()
-    except Exception as e:
-        if str(e) == "Break Loop":
-            pass
-            
+    # Remove mock_sleep side_effect as it is not needed
+    hunter.main()
     assert mock_crew_instance.kickoff.call_count == 1
     assert mock_qm_instance.push_evaluation.call_count == 2
     

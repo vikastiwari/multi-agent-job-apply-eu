@@ -15,7 +15,7 @@ A powerful, automated Multi-Agent Job Application workflow powered by **CrewAI**
 
 - **Language:** Python 3.9+
 - **Agent Orchestration:** CrewAI
-- **LLM Provider:** Google Vertex AI (Gemini 2.5 Flash) via LiteLLM
+- **LLM Provider:** Google Vertex AI (Gemini 3.1 Flash Lite) via LiteLLM
 - **Extraction:** Jina Reader API
 - **PDF Generation:** `fpdf2`
 - **Testing:** `pytest` (100% Core Code Coverage)

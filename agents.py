@@ -11,7 +11,7 @@ def get_llm():
     # Initialize Google AI Studio LLM.
     # Requires GEMINI_API_KEY to be set in your environment.
     return LLM(
-        model="gemini/gemini-2.5-flash-lite",
+        model="gemini/gemini-3.1-flash-lite",
         temperature=0.2
     )
 

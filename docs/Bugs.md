@@ -7,3 +7,7 @@
 
 *   **Bug:** `livekit-plugins-google` install conflicts and test failures due to `async` test definitions without `pytest-asyncio` and `open()` mocking blocking `worker.py` writes.
 *   **Resolution:** Installed `pytest-asyncio`, patched `builtins.open` via `new_callable=MagicMock`, and fixed module-level `sys` imports to satisfy `patch('sys.argv')`.
+
+## Phase 6: Web Dashboard
+*   **Bug:** Vite installed Tailwind CSS v4 which strictly requires Node.js v20+, but the WSL Ubuntu environment had Node.js v18.19.1 installed, causing the PostCSS plugin `Cannot find native binding` error and breaking `npm run dev`.
+*   **Resolution:** Downgraded to Tailwind CSS v3 (`npm install -D tailwindcss@^3`), reverted `postcss.config.js` to use `tailwindcss: {}`, and re-ran the Vite development server.

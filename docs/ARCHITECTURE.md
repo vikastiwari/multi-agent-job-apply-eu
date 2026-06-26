@@ -1,7 +1,7 @@
 # Multi-Agent Job Apply: Architectural Design Document
 
 ## 1. Executive Summary
-The **Multi-Agent Job Apply** system is an automated, AI-driven workflow built with Python and **CrewAI**. It leverages Google's **Vertex AI (Gemini 2.5 Flash)** to analyze job postings, evaluate candidate fit, and auto-generate tailored application materials (Resume PDF and Cover Letter). 
+The **Multi-Agent Job Apply** system is an automated, AI-driven workflow built with Python and **CrewAI**. It leverages Google's **Vertex AI (Gemini 3.1 Flash Lite)** to analyze job postings, evaluate candidate fit, and auto-generate tailored application materials (Resume PDF and Cover Letter). 
 
 ## 2. System Architecture
 The architecture is split into two distinct sequential phases to prevent hallucinated applications and ensure human oversight.

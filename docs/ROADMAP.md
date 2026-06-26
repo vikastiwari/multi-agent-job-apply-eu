@@ -3,7 +3,7 @@
 ## Completed Phases
 - [x] **Phase 1: Minimum Viable Product (Complete)**
   - Basic CLI interface.
-  - Integration with Gemini 2.5 Flash via CrewAI.
+  - Integration with Gemini 3.1 Flash Lite via CrewAI.
   - Integrated Jina Reader API for intelligent web scraping and bypassing complex DOMs.
   - PDF generation and SMTP email dispatch capabilities.
   - Built `SMTPEmailTool` for automated dispatch.
