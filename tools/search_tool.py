@@ -7,22 +7,18 @@ class JobSearchTool(BaseTool):
     
     def _run(self, query: str) -> str:
         try:
-            from duckduckgo_search import DDGS
-            results = DDGS().text(query, max_results=10)
+            import requests
+            # RemoteOK API query
+            url = "https://remoteok.com/api"
+            # Optional: pass tags if we want to filter by query, e.g. ?tags=software,engineer
+            data = requests.get(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}).json()
             urls = []
-            if results:
-                for res in results:
-                    url = res.get('href')
-                    if url:
-                        urls.append(url)
+            for job in data:
+                if 'url' in job:
+                    urls.append(job['url'])
             
-            if not urls:
-                # Fallback to RemoteOK API if DDGS is blocked/empty
-                import requests
-                data = requests.get('https://remoteok.com/api', headers={'User-Agent': 'Mozilla/5.0'}).json()
-                urls = [job['url'] for job in data if 'url' in job][:3]
-                
-            return json.dumps(urls)
+            # Return top 5 URLs
+            return json.dumps(urls[1:6]) # Index 0 is often legal text in remoteok API
         except Exception as e:
             # Absolute fallback
             return json.dumps([
