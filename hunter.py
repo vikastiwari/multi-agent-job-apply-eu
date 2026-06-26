@@ -14,9 +14,8 @@ def main():
     print("Hunter Agent Daemon: Sourcing Jobs...")
     print("==========================================\n")
     
-    query = input("Enter your job search query (e.g., 'site:linkedin.com/jobs \"Software Engineer\" \"Germany\"'): ")
-    if not query:
-        query = 'site:linkedin.com/jobs "Software Engineer" "Germany"'
+    # Daemon mode: use a fixed query or read from environment variable
+    query = os.environ.get("HUNTER_QUERY", 'site:linkedin.com/jobs "Software Engineer" "Germany"')
     
     agents = JobApplicationAgents()
     tasks = JobApplicationTasks()
