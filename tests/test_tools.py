@@ -44,3 +44,23 @@ def test_pdf_tool():
     # Cleanup
     if os.path.exists(test_filepath):
         os.remove(test_filepath)
+
+def test_jina_reader_tool_urlerror(mocker):
+    import urllib.error
+    mock_urlopen = mocker.patch('urllib.request.urlopen')
+    mock_urlopen.side_effect = urllib.error.URLError("Mock URL error")
+    
+    tool = JinaReaderScraperTool()
+    result = tool._run("https://example.com/job")
+    
+    assert "Failed to scrape URL" in result
+    assert "Mock URL error" in result
+
+def test_pdf_tool_failure(mocker):
+    tool = MarkdownToPDFTool()
+    mock_fpdf = mocker.patch('tools.pdf_tool.FPDF')
+    mock_fpdf.side_effect = Exception("PDF Engine Error")
+    
+    result = tool._run("# Title", "test_output.pdf")
+    assert "Failed to generate PDF" in result
+    assert "PDF Engine Error" in result

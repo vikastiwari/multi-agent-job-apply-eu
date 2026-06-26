@@ -52,3 +52,19 @@ def test_write_cover_letter_task(tasks_instance, agents_instance):
     
     assert 'Acme Corp' in task.description
     assert 'Company Context RAG Tool' in task.description
+
+def test_execution_agent_creation(agents_instance):
+    agent = agents_instance.execution_agent()
+    assert agent.role == 'Application Dispatcher'
+    assert len(agent.tools) == 2
+
+def test_execute_application_task(tasks_instance, agents_instance):
+    agent = agents_instance.execution_agent()
+    task = tasks_instance.execute_application_task(agent, "test@test.com", "output_dir")
+    assert 'test@test.com' in task.description
+    assert 'output_dir' in task.description
+
+def test_scrape_job_task(tasks_instance, agents_instance):
+    agent = agents_instance.scraper_agent()
+    task = tasks_instance.scrape_job_task(agent, "https://example.com/job")
+    assert 'https://example.com/job' in task.description

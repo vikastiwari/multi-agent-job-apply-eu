@@ -46,3 +46,74 @@ def test_company_context_rag_tool_no_api_key():
         tool = CompanyContextRAGTool()
         result = tool._run("Acme Corp")
         assert "Error: GEMINI_API_KEY environment variable not set" in result
+
+@patch('tools.lance_rag_tool.os.environ.get', return_value="fake_api_key")
+@patch('tools.lance_rag_tool.DDGS.text')
+def test_company_context_rag_tool_no_ddg_results(mock_ddgs, mock_env):
+    mock_ddgs.return_value = []
+    tool = CompanyContextRAGTool()
+    result = tool._run("Acme Corp")
+    assert "No results found for Acme Corp." in result
+
+@patch('tools.lance_rag_tool.os.environ.get', return_value="fake_api_key")
+@patch('tools.lance_rag_tool.DDGS.text')
+def test_company_context_rag_tool_ddg_exception(mock_ddgs, mock_env):
+    mock_ddgs.side_effect = Exception("DDG Error")
+    tool = CompanyContextRAGTool()
+    result = tool._run("Acme Corp")
+    assert "Error searching DuckDuckGo: DDG Error" in result
+
+@patch('tools.lance_rag_tool.os.environ.get', return_value="fake_api_key")
+@patch('tools.lance_rag_tool.DDGS.text', return_value=[{'href': 'https://example.com'}])
+@patch('tools.lance_rag_tool.requests.get')
+def test_company_context_rag_tool_jina_exception(mock_get, mock_ddgs, mock_env):
+    mock_get.side_effect = Exception("Jina Error")
+    tool = CompanyContextRAGTool()
+    result = tool._run("Acme Corp")
+    assert "Error extracting content from https://example.com: Jina Error" in result
+
+@patch('tools.lance_rag_tool.os.environ.get', return_value="fake_api_key")
+@patch('tools.lance_rag_tool.DDGS.text', return_value=[{'href': 'https://example.com'}])
+@patch('tools.lance_rag_tool.requests.get')
+def test_company_context_rag_tool_jina_no_content(mock_get, mock_ddgs, mock_env):
+    mock_response = MagicMock()
+    mock_response.json.return_value = {"data": {}}
+    mock_get.return_value = mock_response
+    tool = CompanyContextRAGTool()
+    result = tool._run("Acme Corp")
+    assert "Failed to extract meaningful content from https://example.com" in result
+
+@patch('tools.lance_rag_tool.os.environ.get', return_value="fake_api_key")
+@patch('tools.lance_rag_tool.DDGS.text', return_value=[{'href': 'https://example.com'}])
+@patch('tools.lance_rag_tool.requests.get')
+@patch('tools.lance_rag_tool.genai.embed_content')
+def test_company_context_rag_tool_embed_exception(mock_embed, mock_get, mock_ddgs, mock_env):
+    mock_response = MagicMock()
+    mock_response.json.return_value = {"data": {"content": "Company makes rockets."}}
+    mock_get.return_value = mock_response
+    mock_embed.side_effect = Exception("Embed Error")
+    tool = CompanyContextRAGTool()
+    result = tool._run("Acme Corp")
+    assert "Error generating embeddings: Embed Error" in result
+
+@patch('tools.lance_rag_tool.os.environ.get', return_value="fake_api_key")
+@patch('tools.lance_rag_tool.DDGS.text', return_value=[{'href': 'https://example.com'}])
+@patch('tools.lance_rag_tool.requests.get')
+@patch('tools.lance_rag_tool.genai.embed_content')
+@patch('tools.lance_rag_tool.lancedb.connect')
+def test_company_context_rag_tool_db_exception(mock_connect, mock_embed, mock_get, mock_ddgs, mock_env):
+    mock_response = MagicMock()
+    mock_response.json.return_value = {"data": {"content": "Company makes rockets."}}
+    mock_get.return_value = mock_response
+    mock_embed.side_effect = [{"embedding": [[0.1, 0.2]]}]
+    
+    mock_db = MagicMock()
+    mock_connect.return_value = mock_db
+    mock_table = MagicMock()
+    mock_db.create_table.return_value = mock_table
+    
+    mock_embed.side_effect = [{"embedding": [[0.1, 0.2]]}, Exception("Search Embed Error")]
+    
+    tool = CompanyContextRAGTool()
+    result = tool._run("Acme Corp")
+    assert "Error searching vector database: Search Embed Error" in result
