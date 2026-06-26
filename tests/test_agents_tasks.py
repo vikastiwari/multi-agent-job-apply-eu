@@ -39,3 +39,16 @@ def test_tailor_resume_task(tasks_instance, agents_instance):
     # Verify single-column markdown requirement is present
     assert 'single-column layout' in task.description
     assert 'Base Resume Content' in task.description
+
+def test_cover_letter_agent_creation(agents_instance):
+    agent = agents_instance.cover_letter_agent()
+    assert agent.role == 'Corporate Communications Specialist'
+    assert len(agent.tools) == 1
+    assert agent.tools[0].name == 'Company Context RAG Tool'
+
+def test_write_cover_letter_task(tasks_instance, agents_instance):
+    agent = agents_instance.cover_letter_agent()
+    task = tasks_instance.write_cover_letter_task(agent, "Acme Corp")
+    
+    assert 'Acme Corp' in task.description
+    assert 'Company Context RAG Tool' in task.description

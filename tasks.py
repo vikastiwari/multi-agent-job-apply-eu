@@ -22,10 +22,10 @@ class JobApplicationTasks():
             agent=agent
         )
 
-    def write_cover_letter_task(self, agent):
+    def write_cover_letter_task(self, agent, company_name):
         return Task(
-            description='Using the tailored resume and the job description, write a concise, compelling cover letter that will also serve as the body of the application email. Mention specific aspects of the job. Do not include a subject line here, just the email body.',
-            expected_output='A professional email body / cover letter text.',
+            description=f'First, use the Company Context RAG Tool to research {company_name}. Extract their core values, recent news, or engineering culture. Then, using the tailored resume and the job description, write a concise, compelling cover letter that will also serve as the body of the application email. Synthesize your RAG findings into the letter to show profound organizational alignment. Do not include a subject line here, just the email body.',
+            expected_output='A professional email body / cover letter text demonstrating deep company contextualization.',
             agent=agent
         )
 

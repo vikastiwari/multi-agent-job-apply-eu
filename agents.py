@@ -4,6 +4,7 @@ from crewai import Agent, LLM
 from tools.scraper_tool import JinaReaderScraperTool
 from tools.pdf_tool import MarkdownToPDFTool
 from tools.email_tool import SMTPEmailTool
+from tools.lance_rag_tool import CompanyContextRAGTool
 
 def get_llm():
     # Initialize Google AI Studio LLM.
@@ -51,8 +52,9 @@ class JobApplicationAgents():
     def cover_letter_agent(self):
         return Agent(
             role='Corporate Communications Specialist',
-            goal='Write a highly compelling, personalized cover letter and email body for a job application.',
-            backstory='An expert copywriter. You know how to be professional, enthusiastic, and concise. You write emails that recruiters actually want to read.',
+            goal='Write a highly compelling, personalized cover letter and email body for a job application by researching the target company first.',
+            backstory='An expert copywriter. You know how to be professional, enthusiastic, and concise. Before writing, you always use the CompanyContextRAGTool to research the target company\'s engineering culture and recent news, ensuring your emails reflect deep organizational alignment. You write emails that recruiters actually want to read.',
+            tools=[CompanyContextRAGTool()],
             llm=self.llm,
             verbose=True,
             allow_delegation=False

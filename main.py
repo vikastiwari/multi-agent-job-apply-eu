@@ -74,7 +74,7 @@ def main():
     os.environ["DRY_RUN"] = "True"
     
     task_tailor = tasks.tailor_resume_task(tailor, base_resume_content)
-    task_writer = tasks.write_cover_letter_task(writer)
+    task_writer = tasks.write_cover_letter_task(writer, company_name)
     task_execute = tasks.execute_application_task(executor, recipient_email, output_dir)
     
     # Provide the context of previous tasks to subsequent tasks

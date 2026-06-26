@@ -10,3 +10,8 @@ pydantic
 pytest
 pytest-cov
 pytest-mock
+lancedb
+duckduckgo-search
+google-generativeai
+pandas
+pyarrow
