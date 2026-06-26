@@ -15,7 +15,7 @@ def main():
     print("==========================================\n")
     
     # Daemon mode: use a fixed query or read from environment variable
-    query = os.environ.get("HUNTER_QUERY", 'site:linkedin.com/jobs "Software Engineer" "Germany"')
+    query = os.environ.get("HUNTER_QUERY", '"Software Engineer" Remote')
     
     agents = JobApplicationAgents()
     tasks = JobApplicationTasks()

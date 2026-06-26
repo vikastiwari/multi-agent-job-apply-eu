@@ -11,7 +11,7 @@ const KanbanBoard = ({ jobs, refreshJobs, loading }) => {
   const needsReview = jobs.review.filter(j => j.status === 'pending');
   const applied = jobs.review.filter(j => j.status === 'sent');
   const rejected = jobs.review.filter(j => j.status === 'rejected').concat(
-    jobs.evaluation.filter(j => j.status === 'failed')
+    jobs.evaluation.filter(j => j.status === 'failed' || j.status === 'rejected')
   );
 
   const columns = [
