@@ -19,3 +19,5 @@ livekit-agents
 livekit-plugins-google
 livekit-plugins-silero
 pytest-asyncio
+fastapi
+uvicorn
