@@ -17,3 +17,10 @@ As we scale to applying for hundreds of jobs across Europe, the CLI will become 
 - **Side-by-Side Review:** When reviewing a Dry Run, the UI will display the original Job Description on the left, and the tailored PDF resume on the right for easy comparison.
 - **One-Click Dispatch:** A simple "Approve & Send" button in the UI that triggers the SMTP email tool in the background.
 - **Aesthetic:** Clean, glassmorphic, enterprise styling mirroring our previous Swarm Dashboard work.
+
+### Phase 5: LiveKit Playground UI
+For the Mock Interview module, we utilize the hosted **LiveKit Agents Playground** (https://agents-playground.livekit.io).
+*   **Input**: The user inputs their `LIVEKIT_URL` and `LIVEKIT_API_KEY`.
+*   **Interaction**: The user presses "Connect" and speaks into their microphone. A visual audio waveform provides feedback that the HR agent is listening and responding.
+
+### Phase 6: Full Web Dashboard (Upcoming)

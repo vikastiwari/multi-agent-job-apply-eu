@@ -21,7 +21,7 @@
   - Implement a continuously running Hunter Agent that polls job boards (e.g. LinkedIn) via DDGS.
   - Implement a message-broker (SQLite-based QueueManager) so the Hunter asynchronously feeds the Evaluation Crew.
   - Split processing into `hunter.py`, `worker.py`, and `reviewer.py`.
-- [ ] **Phase 5: Voice AI Interview Prep Module**
+- [x] **Phase 5: Voice AI Interview Prep Module (Complete)**
   - Create a sub-800ms latency voice pipeline using WebRTC (LiveKit).
   - Use the scraped Job Description and Tailored Resume to conduct live, spoken mock interviews for European HR screenings.
 - [ ] **Phase 6: Web Dashboard**

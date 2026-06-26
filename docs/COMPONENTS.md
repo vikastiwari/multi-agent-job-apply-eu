@@ -6,6 +6,10 @@ Instead of a single `main.py`, orchestration is now split into three standalone 
 - **`worker.py`:** The backend consumer. It pops URLs from the `evaluation_queue`, orchestrates the CrewAI Phase 1 (Evaluation) and Phase 2 (Execution) agents, and pushes successful drafts to the `review_queue`.
 - **`reviewer.py`:** The CLI Human-In-The-Loop dashboard. It pops from the `review_queue` and allows the user to approve or reject staged applications before dispatch.
 
+### Real-Time Voice Module
+
+* **`interview.py`**: A LiveKit WebRTC worker script. When executed (`python interview.py --company <Name>`), it loads the candidate's tailored resume and the job description, connecting to a LiveKit room to act as an HR Recruiter for a real-time mock interview.
+
 ## 2. AI Agents (`agents.py`)
 Defines the personas, goals, and backstories for the Swarm.
 - **`hunter_agent`:** Proactively sources jobs using advanced search queries (DuckDuckGo Dorks) to uncover hidden opportunities.

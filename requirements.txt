@@ -15,3 +15,7 @@ duckduckgo-search
 google-generativeai
 pandas
 pyarrow
+livekit-agents
+livekit-plugins-google
+livekit-plugins-silero
+pytest-asyncio

@@ -66,6 +66,12 @@ def process_job(job_id: int, job_url: str, qm: QueueManager, base_resume_content
         os.makedirs(output_dir, exist_ok=True)
         os.environ["OUTPUT_DIR"] = output_dir
         
+        # Save job description for Interview Prep Module (Phase 5)
+        job_desc_path = os.path.join(output_dir, "job_description.md")
+        with open(job_desc_path, "w", encoding="utf-8") as f:
+            f.write(str(task_scrape.output.raw))
+
+        
         # We also need a generic email since we don't have human input
         # The writer agent should find it, or we use a fallback
         recipient_email = "recruiter@" + safe_company_name.lower() + ".com"

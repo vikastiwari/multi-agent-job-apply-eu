@@ -41,13 +41,16 @@ graph TD;
 
 ## 3. Core Architectural Decisions
 
-## High-Level Architecture (Phase 4)
+## 1. High-Level Architecture
 
-The system consists of three independent async components communicating via a SQLite-backed Message Broker (`queue_manager.py`):
+The system follows a multi-daemon asynchronous queue architecture with a specialized WebRTC real-time module:
 
-1.  **Hunter Daemon (`hunter.py`)**: Runs continuously, querying job boards (e.g., via `duckduckgo-search`), and extracting job URLs. It pushes these into the `evaluation_queue`.
-2.  **Worker Daemon (`worker.py`)**: Continuously polls the `evaluation_queue`. When a job URL is found, it runs the `eval_crew`. If the evaluation is "Decision: GO", it runs the `exec_crew` in DRY-RUN mode. Successful dry-runs are pushed to the `review_queue`.
-3.  **Reviewer CLI (`reviewer.py`)**: A Human-In-The-Loop terminal dashboard. Pops jobs from the `review_queue`, presents the drafted email/PDF to the user, and physically dispatches the `SMTPEmailTool` if approved.
+1. **Hunter Daemon (`hunter.py`)**: Continuously searches for jobs and queues them.
+2. **Worker Daemon (`worker.py`)**: Dequeues jobs, runs the "GO/NO-GO" Evaluation Crew, and then the Execution Crew (Dry Run Resume/Cover Letter generation).
+3. **Reviewer Daemon (`reviewer.py`)**: Reviews generated artifacts and queues approved applications for final sending.
+4. **Interview Module (`interview.py`)**: A real-time WebRTC LiveKit worker that reads the generated resume and job description to conduct a low-latency voice mock interview.
+
+## 2. Queueing System (SQLite)
 
 ### Sub-System: The CrewAI Engine
 

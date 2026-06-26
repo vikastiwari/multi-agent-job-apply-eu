@@ -5,7 +5,8 @@ from unittest.mock import patch, MagicMock
 @patch('worker.JobApplicationAgents')
 @patch('worker.JobApplicationTasks')
 @patch('worker.os.makedirs')
-def test_worker_process_job_go(mock_makedirs, mock_tasks, mock_agents, mock_crew):
+@patch('builtins.open', new_callable=MagicMock)
+def test_worker_process_job_go(mock_open, mock_makedirs, mock_tasks, mock_agents, mock_crew):
     mock_qm = MagicMock()
     
     mock_crew_instance = MagicMock()
