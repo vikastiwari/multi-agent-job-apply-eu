@@ -1,11 +1,12 @@
 # UI/UX Design Strategy: Multi-Agent Job Apply
 
-## 1. Current State: CLI Interface
-Currently, the application runs entirely in the terminal. The UX is focused on developer efficiency and logging visibility.
+## 1. Current State: Multi-Terminal CLI Ecosystem
+As of Phase 4, the application has evolved from a single synchronous script to a distributed CLI ecosystem.
 
 ### Key CLI UX Features:
-- **Clear Prompts:** The user is asked linearly for the Job URL, Company Name, and Recruiter Email.
-- **Verbose Agent Logging:** CrewAI's `verbose=True` is enabled. The user can watch the LLM's thought process, including the real-time DuckDuckGo searches and semantic insights retrieved by the RAG tool.
+- **Asynchronous Workflows:** The user can start the `hunter.py` daemon in one terminal to continuously source jobs, run the `worker.py` daemon in another to process them, and open `reviewer.py` whenever they have free time to approve applications.
+- **Reviewer Dashboard:** The `reviewer.py` script provides a clean text-based dashboard that pops pending applications, displays the synthesized Cover Letter and metadata, and allows quick `yes`/`no`/`skip` interactions.
+- **Verbose Agent Logging:** Inside the worker terminal, CrewAI's `verbose=True` is enabled. The user can watch the LLM's thought process, including the real-time DuckDuckGo searches and semantic insights retrieved by the RAG tool.
 - **Directory Organization:** Outputs are automatically sorted into clean folders: `output/<Company_Name>/`.
 
 ## 2. Future Vision: The Application Tracker Dashboard
