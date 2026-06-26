@@ -5,7 +5,7 @@ Currently, the application runs entirely in the terminal. The UX is focused on d
 
 ### Key CLI UX Features:
 - **Clear Prompts:** The user is asked linearly for the Job URL, Company Name, and Recruiter Email.
-- **Verbose Agent Logging:** CrewAI's `verbose=True` is enabled so the user can watch the "thoughts" of the LLM as it processes the job description and evaluates the resume.
+- **Verbose Agent Logging:** CrewAI's `verbose=True` is enabled. The user can watch the LLM's thought process, including the real-time DuckDuckGo searches and semantic insights retrieved by the RAG tool.
 - **Directory Organization:** Outputs are automatically sorted into clean folders: `output/<Company_Name>/`.
 
 ## 2. Future Vision: The Application Tracker Dashboard

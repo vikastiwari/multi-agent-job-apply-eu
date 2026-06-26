@@ -12,15 +12,16 @@
 Defines the personas, goals, and backstories for the Swarm.
 - **`scraper_agent`:** Equipped with the `JinaReaderScraperTool` to extract clean job postings.
 - **`evaluator_agent`:** Analyzes fit (Base Resume vs Job Description).
-- **`resume_tailor_agent`:** Rewrites the base markdown resume to highlight keyword matches.
-- **`cover_letter_agent`:** Drafts the email body/cover letter.
+- **`resume_tailor_agent`:** Rewrites the base markdown resume to highlight keyword matches strictly adhering to European standards.
+- **`cover_letter_agent`:** Equipped with the `CompanyContextRAGTool` to retrieve semantic insights about a company and draft highly contextualized cover letters.
 - **`execution_agent`:** Equipped with `MarkdownToPDFTool` and `SMTPEmailTool` to handle final logistics.
 
 ## 3. Task Definitions (`tasks.py`)
 - **Role:** Maps specific, actionable prompts to agents.
-- **Responsibilities:** Defines the exact expected output format (e.g., instructing the Evaluator to end its output strictly with "Decision: GO").
+- **Responsibilities:** Defines the exact expected output format (e.g., instructing the Evaluator to end its output strictly with "Decision: GO", or instructing the Writer to use LanceDB insights).
 
 ## 4. Custom Tools (`tools/`)
 - **`JinaReaderScraperTool`:** A custom CrewAI `BaseTool` that calls the Jina Reader API.
-- **`MarkdownToPDFTool`:** Uses `pdfkit` and `wkhtmltopdf` to render the agent's markdown string into a styled PDF file.
+- **`CompanyContextRAGTool`:** Uses DuckDuckGo, Jina Reader, Gemini Embeddings, and LanceDB to perform deep semantic searches on a target company for cover letter generation.
+- **`MarkdownToPDFTool`:** Uses `fpdf2` to render the agent's markdown string into a styled PDF file.
 - **`SMTPEmailTool`:** Constructs a MIME multipart email (text body + PDF attachment) and dispatches it via SMTP.

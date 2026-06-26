@@ -23,6 +23,13 @@ graph TD;
     subgraph Phase 2: Execution Crew
         Check -->|GO| Tailor[Resume Tailor Agent]
         Tailor --> Writer[Cover Letter Writer]
+        
+        subgraph Semantic Context
+            Writer -.->|Search DDG + Jina| CompanyWeb[Company Blog]
+            CompanyWeb --> LanceDB[(LanceDB Vector DB)]
+            LanceDB -.->|Context Injection| Writer
+        end
+        
         Writer --> Executor[Application Dispatcher]
         
         Executor -.->|wkhtmltopdf| PDF[tailored_resume.pdf]
@@ -46,7 +53,7 @@ By default, the application operates in a "Dry Run" mode before actually dispatc
 - The user can review the `tailored_resume.pdf` and `email_dry_run.txt` before confirming dispatch.
 
 ### 3.3. Tool Abstraction
-Custom Python tools (`JinaReaderScraperTool`, `MarkdownToPDFTool`, `SMTPEmailTool`) wrap complex logic so the CrewAI agents only need to know *what* to do, not *how* to do it.
+Custom Python tools (`JinaReaderScraperTool`, `MarkdownToPDFTool`, `SMTPEmailTool`, `CompanyContextRAGTool`) wrap complex logic so the CrewAI agents only need to know *what* to do, not *how* to do it. The RAG tool specifically utilizes ephemeral, in-memory **LanceDB** to perform high-speed semantic searches on scraped company data to inject deep organizational alignment into cover letters.
 
 ## 4. Scalability & Deployment
 Currently designed as a local CLI tool. Future architectures may involve migrating this into a fastAPI backend with a React UI for managing hundreds of concurrent applications.
